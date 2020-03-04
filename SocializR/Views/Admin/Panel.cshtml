@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model List<SelectListItem>
+@{
+    ViewData["Title"] = "Panel";
+}
+
+<div class="content">
+    <h2 class="site-color">Admin Panel</h2>
+
+    <div class="form-inline" style="margin-bottom:50px">
+        <label class="site-color control-label">Add Interest: </label>
+        <input id="interest-text" class="form-control input-box" placeholder="Add interest..." />
+        <button id="interest-button" style="margin-left:25px" class="btn btn-primary btn-default">Add</button>
+        <br />
+        <label id="interest-label" class="admin-label"></label>
+    </div>
+
+    <div class="form-inline" style="margin-bottom:50px">
+        <label class="site-color control-label">Add County: </label>
+        <input id="county-text" class="form-control input-box" placeholder="Add County..." />
+        <button id="county-button" style="margin-left:25px" class="btn btn-primary btn-default">Add</button>
+        <br />
+        <label id="county-label" class="admin-label"></label>
+    </div>
+
+    <div class="form-inline" style="margin-bottom:50px">
+        <label class="site-color control-label">Add Locality:</label>
+        <input id="locality-text" class="form-control input-box" placeholder="Add Locality..." />
+        <button id="locality-button" style="margin-left:25px" class="btn btn-primary btn-default">Add</button>
+        <br />
+        <label class=" site-color control-label" style="margin-top:50px">For County: </label>
+        <select asp-items="Model" id="counties" style="margin-top:50px" class="form-control"></select>
+        <br />
+        <label id="locality-label" class="admin-label"></label>
+
+    </div>
+
+</div>
+
+<script src="~/js/admin.js"></script>

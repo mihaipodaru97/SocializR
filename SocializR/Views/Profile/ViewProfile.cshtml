@@ -1,0 +1,84 @@
+﻿@model SocializR.Models.UserModel
+@inject SocializR.Models.CurrentUser CurrentUser;
+
+<div class="content container row">
+    <img id="profilePhoto" class="profile-photo" src="@Url.Action("ProfilePhoto","Profile", new { id = Model.Id })" onerror="this.src='/images/avatar.jpg';" />
+    <h3 class="site-color"> @Model.FirstName @Model.LastName</h3>
+
+    @if (CurrentUser.CanEditProfile)
+    {
+        <button onclick="window.location = Router.action('Profile', 'EditProfile', { id: @Model.Id} )" class="btn btn-default btn-primary profile-button">Edit profile</button>
+        <br />
+    }
+
+    @if (CurrentUser.CanDeleteUser)
+    {
+        <button data-user-id="@Model.Id" id="delete" class="btn btn-default btn-primary profile-button">Delete user</button>
+        <br />
+    }
+
+    @if (CurrentUser.Id != Model.Id && CurrentUser.IsAuthenticated)
+    {
+        <h3 class="site-color" style="display:inline">Relation status : </h3>
+        @if (Model.Friends)
+        {
+            <h3 class="site-color" style="display:inline">Friends</h3>
+        }
+        else if (Model.FriendRequestSent)
+        {
+            <h3 class="site-color" style="display:inline">Friend Request sent</h3>
+        }
+        else
+        {
+            <h3 class="site-color" style="display:inline">Not friends</h3>
+            <button class="btn btn-default btn-primary" id="add-friend-button" onclick="addFriend(@Model.Id)"> Add friend</button>
+        }
+    }
+
+
+    @if (Model.CanSeeProfile)
+    {
+        <h3 class="site-color" style="margin-top:10px">Interests : </h3>
+        @if (Model.InterestsNames.Any())
+        {
+            <ul>
+                @foreach (var interest in Model.InterestsNames)
+                {
+                    <li>
+                        <h4 class="site-color" style="margin-left:30px">
+                            @interest
+                        </h4>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <h4 class="site-color" style="margin-left:30px">None</h4>
+        }
+
+        <h3 class="site-color">Albums:</h3>
+
+        @if (Model.Albums.Any())
+        {
+            foreach (var album in Model.Albums)
+            {
+                <div onclick="window.location = Router.action('Album', 'ViewAlbum', { id: @album.Id} )" class="album container info-block">
+                    <img class="view-album-image" src="~/images/album.png" />
+                    <h4 class="site-color" style="text-decoration:solid">@album.Name</h4>
+                </div>
+            }
+        }
+        else
+        {
+            <h4 class="site-color" style="margin-left:30px">None</h4>
+        }
+    }
+    else
+    {
+        <h2 class="site-color">Profilul este privat!</h2>
+    }
+
+</div>
+<script src="~/js/requests.js"></script>
+<script src="~/js/delete.js"></script>

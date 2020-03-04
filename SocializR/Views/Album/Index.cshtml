@@ -1,0 +1,16 @@
+﻿@model List<ViewAlbumsModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="content">
+    <a asp-action="AddAlbum" asp-controller="Album"><h2 class="site-color" style="margin-top:50px">Add album</h2></a>
+
+    @foreach (var album in Model)
+    {
+        <div onclick="window.location = Router.action('Album', 'EditAlbum', { id: @album.Id })" class="container album">
+            <img style="width:125px;height:auto" src="~/images/album.png" />
+            <h4 class="site-color" style="text-decoration:solid">@album.Name</h4>
+        </div>
+    }
+</div>

@@ -1,0 +1,99 @@
+﻿@model SocializR.Models.EditProfileModel
+@{
+    ViewData["Title"] = "EditProfile";
+}
+
+<div class="content container row">
+    <div style="padding-top:35px;margin-left:50px">
+        <div class="row">
+            <h1 class="site-color">Edit Profile</h1>
+            <form enctype="multipart/form-data" asp-action="EditProfile" style="margin-top:15px">
+                <input asp-for="Id" hidden />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="site-color control-label"></label>
+                    <input asp-for="FirstName" required class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="site-color control-label"></label>
+                    <input asp-for="LastName" required class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CountyId" class="site-color control-label"></label>
+                    <select asp-for="CountyId" asp-items="Model.Counties" required class="form-control"></select>
+                    <span asp-validation-for="CountyId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LocalityId" class="site-color control-label"></label>
+                    <select asp-for="LocalityId" asp-items="@new List<SelectListItem>()" required class="form-control"></select>
+                    <span asp-validation-for="LocalityId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Birthday" class="site-color control-label"></label>
+                    <input asp-for="Birthday" required type="date" class="form-control" />
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Privacy" class="site-color control-label"></label>
+                    @if (Model.Privacy == "Private")
+                    {
+                        <input name="Privacy" type="radio" style="margin-left:40px" checked value="Private" class="form-inline" />
+                        <h5 class="site-color" style="display:inline">Private</h5>
+                        <input name="Privacy" type="radio" style="margin-left:40px" value="Public" class="form-inline" />
+                        <h5 class="site-color" style="display:inline">Public</h5>
+                    }
+                    else
+                    {
+                        <input name="Privacy" type="radio" style="margin-left:40px" value="Private" class="form-inline" />
+                        <h5 class="site-color" style="display:inline">Private</h5>
+                        <input name="Privacy" type="radio" style="margin-left:40px" checked value="Public" class="form-inline" />
+                        <h5 class="site-color" style="display:inline">Public</h5>
+                    }
+
+                    <span asp-validation-for="Privacy" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender" class="site-color control-label"></label>
+
+                    @if (Model.Gender == "Male")
+                    {
+                        <input name="Gender" type="radio" style="margin-left:40px" value="Female" class="form-inline" />
+                        <h5 class="site-color" style="display:inline">Female</h5>
+                        <input name="Gender" type="radio" style="margin-left:40px" checked value="Male" class="form-inline" />
+                        <h5 class="site-color" style="display:inline">Male</h5>
+                    }
+                    else
+                    {
+                        <input name="Gender" type="radio" style="margin-left:40px" checked value="Female" class="form-inline" />
+                        <h5 class="site-color" style="display:inline">Female</h5>
+                        <input name="Gender" type="radio" style="margin-left:40px" value="Male" class="form-inline" />
+                        <h5 class="site-color" style="display:inline">Male</h5>
+                    }
+
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ProfilePhoto" class="site-color control-label"></label>
+                    <input asp-for="ProfilePhoto" type="file" class="form-control" />
+                    <span asp-validation-for="ProfilePhoto" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Interests" class="site-color control-label"></label>
+                    <select asp-for="Interests" id="select2interests" multiple class="form-control"></select>
+                    <span asp-validation-for="Interests" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-default btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/register.js"></script>
+<script src="~/js/interests.js"></script>

@@ -1,0 +1,43 @@
+﻿@model SocializR.Models.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div style="float:left;padding-right:200px">
+    <img src="~/images/login.PNG" />
+</div>
+<div style="padding-top:150px">
+    <div class="row">
+        <div class="col-md-4">
+            <h1 class="site-color">Login</h1>
+            <h5 class="site-color" style="display:inline">Or  </h5>
+            <a asp-action="Register" asp-controller="Account">
+                <h4 class="site-color" style="display:inline"> Register </h4>
+            </a>
+            <h5 class="site-color" style="display:inline">  if you don't have an account </h5>
+            <form asp-action="Login" style="margin-top:25px">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class=" site-color control-label"></label>
+                    <input asp-for="Email" required type="email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="site-color control-label"></label>
+                    <input asp-for="Password" type="password" required class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn-default btn-primary" />
+                </div>
+                @if (Model.IsInvalid)
+                {
+                    <div class="form-group">
+                        <p class="text-danger">Email or password is invalid!</p>
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+</div>

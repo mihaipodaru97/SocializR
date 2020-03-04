@@ -1,0 +1,35 @@
+﻿@model SocializR.Models.PhotoModel
+
+@{
+    ViewData["Title"] = "AddPhoto";
+}
+
+<div class="content">
+    <h2 class="site-color">AddPhoto</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form enctype="multipart/form-data" asp-action="AddPhoto">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Photo" class="site-color control-label"></label>
+                    <input asp-for="Photo" accept="image/*" type="file" class="form-control" />
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                </div>
+
+                <input asp-for="AlbumId" hidden />
+
+                <div class="form-group">
+                    <input type="submit" value="Add Photo" class="btn btn-default btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+﻿@model PaginatedList<PostFeedModel>
+@inject SocializR.Models.CurrentUser CurrentUser
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="content container row">
+    <textarea id="text" class="post-box" placeholder="Speak your mind"></textarea>
+    <br />
+    <label style="margin-left:30px" hidden id="error" class="text-danger">Postul trebuie sa aiba peste 10 caractere</label>
+    <br />
+    <button class="btn btn-default btn-primary" style="margin-left:275px" onclick="post(@CurrentUser.Id)">Post</button>
+
+
+    @foreach (var post in Model)
+    {
+        <div style="word-break:break-word;width:450px">
+            <div class="row post">
+                <img class="post-image" src="@Url.Action("ProfilePhoto","Profile", new { id = post.User.Id })" onerror="this.src='/images/avatar.jpg';" />
+                <h5 class="site-color" style="display:inline"> <strong> @post.User.FirstName @post.User.LastName </strong></h5>
+                <p style="word-break:break-word" class="site-color">@post.Body</p>
+
+                @if (post.CanLike)
+                {
+                    <a class="like-button" style="display:inline" data-like-state="like" data-post-id="@post.Id">Like</a>
+                }
+                else
+                {
+                    <a class="like-button" style="display:inline" data-like-state="unlike" data-post-id="@post.Id">Unlike</a>
+                }
+
+                <p id="text-@post.Id" style="display:inline" class="right">@post.NumberOfLikes Likes</p>
+            </div>
+
+            @foreach (var comment in post.Comments)
+            {
+                <div class="row comment" style="padding-left:50px">
+                    <hr />
+                    <img class="post-image" src="@Url.Action("ProfilePhoto","Profile", new { id = comment.User.Id })" onerror="this.src='/images/avatar.jpg';" />
+                    <h5 class="site-color" style="display:inline"> <strong> @comment.User.FirstName @comment.User.LastName </strong></h5>
+                    <p style="word-break:break-word" class="site-color">@comment.Body</p>
+                </div>
+
+            }
+
+            <div class="row" style="width:450px">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    <input class="comment-box" placeholder="Write a comment" onkeypress="comment(event, @post.Id)" />
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.Any())
+    {
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+
+        <center style="margin-top:25px">
+            <a asp-action="Index"
+               asp-route-page="@(Model.PageIndex - 1)"
+               class="btn btn-default @prevDisabled">
+                Previous
+            </a>
+            <a asp-action="Index"
+               asp-route-page="@(Model.PageIndex + 1)"
+               class="btn btn-default @nextDisabled">
+                Next
+            </a>
+        </center>
+    }
+
+</div>
+<script src="~/js/post.js"></script>
+<script src="~/js/like.js"></script>

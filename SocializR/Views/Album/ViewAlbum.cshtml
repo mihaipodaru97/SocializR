@@ -1,0 +1,25 @@
+﻿@model ViewAlbumModel
+@{
+    ViewData["Title"] = "ViewAlbum";
+}
+
+<div class="content">
+    <h2 class="site-color">@Model.Name</h2>
+
+    @if (Model.Photos.Any())
+    {
+        foreach (var photo in Model.Photos)
+        {
+            <div style="word-break:break-word; background-color:azure" class="album container">
+                <img class="image view-image" src="@Url.Action("GetPhoto", "Photo", new { id = photo.Id })" />
+                <h4 class="site-color" style="text-decoration:solid;word-break:break-word">@photo.Description</h4>
+            </div>
+        }
+    }
+    else
+    {
+        <h3 class="site-color" style="margin-left:30px">No pictures in this album</h3>
+    }
+
+</div>
+<script src="~/js/album.js"></script>

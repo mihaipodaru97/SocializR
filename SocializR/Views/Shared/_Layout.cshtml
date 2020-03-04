@@ -1,0 +1,91 @@
+﻿@inject RouteJs.IRouteJsHelper RouteJs
+@inject CurrentUser CurrentUser
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SocializR</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="~/js/layout.js"></script>
+    <link href="~/css/site.css" rel="stylesheet" />
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+    </environment>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header" style="padding-right:275px">
+                    <a asp-controller="Feed" asp-action="Index" class="navbar-brand logo">SocializR</a>
+                </div>
+                <div class="nav navbar navbar-left nav-poz">
+                    <select id="select2list" style="width:190px"></select>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (CurrentUser.IsAuthenticated)
+                    {
+                        <li><a asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-log-out"></span>LogOut</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+                        <li><a asp-controller="Account" asp-action="Register"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container body-content">
+            @RouteJs.Render()
+
+            @if (CurrentUser.IsAuthenticated)
+            {
+                <div class="sidenav">
+                    <center>
+                        <ul style="padding:0px">
+                            <li class="list-item"><img id="profilePhoto" src="@Url.Action("ProfilePhoto","Profile", new { id = CurrentUser.Id })" onerror="this.src='/images/avatar.jpg';" /></li>
+                            <li class="list-item"><h4>@CurrentUser.FirstName @CurrentUser.LastName</h4></li>
+                            <li class="list-item"><a style="text-decoration:none" asp-action="EditProfile" asp-controller="Profile" asp-route-id="@CurrentUser.Id">Edit profile</a></li>
+                            <li class="list-item"><a style="text-decoration:none" asp-action="Index" asp-controller="Album">Edit photos</a></li>
+                            <li class="list-item"><a style="text-decoration:none" asp-action="Index" asp-controller="Feed">Feed</a></li>
+                            <li class="list-item"><a style="text-decoration:none" asp-action="ViewFriends" asp-controller="Friend">Friends</a></li>
+
+                            @if (CurrentUser.Roles.Contains("Admin"))
+                            {
+                                <li class="list-item"><a style="text-decoration:none" asp-action="GetPermission" asp-controller="Account">Permissions</a></li>
+                                <li class="list-item"><a style="text-decoration:none" asp-action="Panel" asp-controller="Admin">Admin Panel</a></li>
+                            }
+
+                        </ul>
+                    </center>
+                </div>
+            }
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer>
+        <div class="container body-content">
+
+            <hr />
+            <p class="text-right">&copy; 2018 - SocializR</p>
+        </div>
+    </footer>
+</body>
+</html>

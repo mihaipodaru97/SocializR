@@ -1,0 +1,32 @@
+﻿@model EditAlbumModel
+@{
+    ViewData["Title"] = "EditAlbum";
+}
+
+<div class="content">
+    <h2 data-album-id="@Model.Id" id="albumId" class="site-color" style="margin-bottom:50px">Edit Album</h2>
+    <hr />
+    <div class="form-inline" style="margin-bottom:50px">
+        <label class="site-color control-label">Name: </label>
+        <input id="albumName" class="form-control input-box" value="@Model.Name" />
+        <button onclick="changeAlbumName(@Model.Id)" style="margin-left:25px" class="btn btn-primary btn-default">Edit</button>
+    </div>
+
+    <button class="btn btn-primary btn-default" onclick="window.location = Router.action('Photo', 'AddPhoto', { albumId: @Model.Id })" style="margin-bottom:35px">Add photo</button>
+
+    @foreach (var photo in Model.Photos)
+    {
+        <div>
+            <img class="edit-photo" src="@Url.Action("GetPhoto", "Photo", new { id = photo.Id })" />
+            <div class="form-inline" style="margin-bottom:50px">
+                <label class="site-color control-label">Description: </label>
+                <input id="text-@photo.Id" class="form-control input-box" value="@photo.Description">
+                <button data-photo-id="@photo.Id" class="btn btn-primary btn-default form-inline edit-button">Edit</button>
+                <button data-photo-id="@photo.Id" class="btn btn-primary btn-default form-inline delete-button">Delete photo</button>
+            </div>
+        </div>
+    }
+
+</div>
+
+<script src="~/js/album.js"></script>

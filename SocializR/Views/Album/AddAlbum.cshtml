@@ -1,0 +1,23 @@
+﻿@model CreateAlbumModel
+@{
+    ViewData["Title"] = "AddAlbum";
+}
+
+<div class="content">
+
+    <h2 class="site-color">Add Album</h2>
+
+    <form asp-action="AddAlbum">
+        <div class="form-group">
+            <label asp-for="Name" class=" site-color control-label"></label>
+            <input asp-for="Name" required type="text" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-default btn-primary" />
+        </div>
+    </form>
+</div>
+
+

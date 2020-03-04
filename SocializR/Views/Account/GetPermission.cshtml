@@ -1,0 +1,14 @@
+﻿@inject CurrentUser CurrentUser
+@{
+    ViewData["Title"] = "GetPermission";
+}
+
+<div class="content">
+    <h2 class="site-color">@CurrentUser.FirstName @CurrentUser.LastName</h2>
+
+    <h3 class="site-color">Create County = @CurrentUser.CanCreateCities</h3>
+    <h3 class="site-color">Create Locality = @CurrentUser.CanCreateLocalities</h3>
+    <h3 class="site-color">Edit Profile = @CurrentUser.CanEditProfile</h3>
+    <h3 class="site-color">View Profile = @CurrentUser.CanViewProfile</h3>
+    <h3 class="site-color">Delete User = @CurrentUser.CanDeleteUser</h3>
+</div>

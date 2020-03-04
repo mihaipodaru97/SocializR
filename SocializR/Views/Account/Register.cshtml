@@ -1,0 +1,82 @@
+﻿@model SocializR.Models.RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div style="float:left;padding-right:200px">
+    <img src="~/images/login.PNG" />
+</div>
+<div style="padding-top:35px">
+    <div class="row">
+        <h1 class="site-color">Register</h1>
+        <h5 class="site-color" style="display:inline">Or  </h5>
+        <a asp-action="Login" asp-controller="Account">
+            <h4 class="site-color" style="display:inline"> Login </h4>
+        </a>
+        <h5 class="site-color" style="display:inline">  if you have an account </h5>
+        <div class="col-md-4">
+            <form asp-action="Register" style="margin-top:15px">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="site-color control-label"></label>
+                    <input asp-for="FirstName" required class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="site-color control-label"></label>
+                    <input asp-for="LastName" required class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="site-color control-label"></label>
+                    <input asp-for="Email" required class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="site-color control-label"></label>
+                    <input asp-for="Password" required type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CountyId" class=" site-color control-label"></label>
+                    <select asp-for="CountyId" asp-items="Model.Counties" required class="form-control"></select>
+                    <span asp-validation-for="CountyId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LocalityId" class="site-color control-label"></label>
+                    <select asp-for="LocalityId" asp-items="@new List<SelectListItem>()" required class="form-control"></select>
+                    <span asp-validation-for="LocalityId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Birthday" class="site-color control-label"></label>
+                    <input asp-for="Birthday" required type="date" class="form-control" />
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Privacy" class="site-color control-label"></label>
+                    <input name="Privacy" type="radio" style="margin-left:40px" value="Private" class="form-inline" />
+                    <h5 class="site-color" style="display:inline">Private</h5>
+                    <input name="Privacy" type="radio" style="margin-left:40px" value="Public" class="form-inline" />
+                    <h5 class="site-color" style="display:inline">Public</h5>
+                    <span asp-validation-for="Privacy" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender" class="site-color control-label"></label>
+                    <input name="Gender" type="radio" style="margin-left:40px" value="Female" class="form-inline" />
+                    <h5 class="site-color" style="display:inline">Female</h5>
+                    <input name="Gender" type="radio" style="margin-left:40px" value="Male" class="form-inline" />
+                    <h5 class="site-color" style="display:inline">Male</h5>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn btn-default btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/register.js"></script>

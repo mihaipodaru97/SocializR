@@ -1,0 +1,74 @@
+﻿@model SocializR.Models.ViewFriendModel
+@inject SocializR.Models.CurrentUser CurrentUser
+
+@{
+    ViewData["Title"] = "ViewFriends";
+}
+
+<div class="content" id="content">
+
+    <h3 class="site-color">Friend Requests</h3>
+
+    @if (Model.Requests.Any())
+    {
+        @foreach (var friend in Model.Requests)
+        {
+            <div class="row">
+                <div class="shadow">
+                    <div class="col-sm-12">
+                        <div class="col-sm-2">
+                            <img class="friends-image" src="@Url.Action("ProfilePhoto","Profile", new { id = friend.Id })" onerror="this.src='/images/avatar.jpg';" />
+                        </div>
+                        <div class="col-sm-7">
+                            <a asp-action="ViewProfile" asp-controller="Profile" asp-route-id="@friend.Id">
+                                <h3 class="site-color" style="display:inline">@friend.FirstName @friend.LastName</h3>
+                            </a>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-success friends-button" onclick="acceptRequest(@friend.Id)">Accept </button>
+                            <button class="btn btn-danger friends-button" onclick="cancelRequest(@friend.Id)">Decline</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h4 class="site-color">Momentan nu ai nicio cerere de prietenie</h4>
+    }
+
+    <h3 class="site-color">Friends</h3>
+    @if (Model.Friends.Any())
+    {
+        @foreach (var friend in Model.Friends)
+        {
+            <div class="row" id="friend-@friend.Id">
+                <div class="shadow">
+                    <div class="col-sm-12">
+                        <div class="col-sm-2">
+                            <img class="friends-image" src="@Url.Action("ProfilePhoto","Profile", new { id = friend.Id })" onerror="this.src='/images/avatar.jpg';" />
+                        </div>
+                        <div class="col-sm-8">
+                            <a asp-action="ViewProfile" asp-controller="Profile" asp-route-id="@friend.Id">
+                                <h3 class="site-color" style="display:inline">@friend.FirstName @friend.LastName</h3>
+                            </a>
+                        </div>
+                        <div class="col-sm-2">
+                            <button data-friend-id="@friend.Id" class="btn btn-danger friends-button unfriend-button">Unfriend</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h4 class="site-color">Momentan nu ai niciun prieten</h4>
+    }
+</div>
+<script src="~/js/requests.js"></script>
